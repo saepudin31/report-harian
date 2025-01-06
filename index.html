@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Pekerjaan Harian</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Laporan Pekerjaan It Harian Udin</h1>
+        
+        <!-- Form Laporan -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title text-center">Tambah Laporan</h3>
+                <form id="reportForm">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Tanggal:</label>
+                        <input type="date" id="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="issue" class="form-label">Masalah Server:</label>
+                        <textarea id="issue" class="form-control" rows="3" placeholder="Deskripsikan masalah" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="solution" class="form-label">Perbaikan Server:</label>
+                        <textarea id="solution" class="form-control" rows="3" placeholder="Deskripsikan perbaikan" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Kirim Laporan</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Laporan Terkirim -->
+        <div class="mt-5">
+            <h2 class="text-center mb-4">Laporan Terkirim</h2>
+            <table class="table table-striped" id="reportTable">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Masalah</th>
+                        <th>Perbaikan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Laporan ditambahkan secara dinamis -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
