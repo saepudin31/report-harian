@@ -17,29 +17,37 @@ function loadReports() {
             return response.text();  // Ambil respons sebagai teks terlebih dahulu
         })
         .then(responseText => {
-            try {
-                const reports = JSON.parse(responseText);  // Coba parse JSON
-                const reportTable = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
-                reportTable.innerHTML = '';  // Menghapus isi tabel sebelumnya
+            console.log("Response text:", responseText);  // Log respons mentah
 
-                // Jika laporan ditemukan, masukkan ke dalam tabel
-                if (reports.length > 0) {
-                    reports.forEach(report => {
+            // Cek apakah respons dimulai dengan tanda kurung { atau [ (indikasi JSON)
+            if (responseText.trim().startsWith("{") || responseText.trim().startsWith("[")) {
+                try {
+                    const reports = JSON.parse(responseText);  // Coba parse JSON
+                    const reportTable = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
+                    reportTable.innerHTML = '';  // Menghapus isi tabel sebelumnya
+
+                    // Jika laporan ditemukan, masukkan ke dalam tabel
+                    if (reports.length > 0) {
+                        reports.forEach(report => {
+                            const row = reportTable.insertRow();
+                            row.insertCell(0).textContent = formatDate(report.date); // Format tanggal
+                            row.insertCell(1).textContent = report.issue;
+                            row.insertCell(2).textContent = report.solution;
+                        });
+                    } else {
+                        // Tampilkan pesan jika tidak ada laporan
                         const row = reportTable.insertRow();
-                        row.insertCell(0).textContent = formatDate(report.date); // Format tanggal
-                        row.insertCell(1).textContent = report.issue;
-                        row.insertCell(2).textContent = report.solution;
-                    });
-                } else {
-                    // Tampilkan pesan jika tidak ada laporan
-                    const row = reportTable.insertRow();
-                    const cell = row.insertCell(0);
-                    cell.colSpan = 3;
-                    cell.textContent = "Tidak ada laporan yang tersedia.";
+                        const cell = row.insertCell(0);
+                        cell.colSpan = 3;
+                        cell.textContent = "Tidak ada laporan yang tersedia.";
+                    }
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                    alert('Terjadi kesalahan saat memproses data laporan. Respons tidak valid.');
                 }
-            } catch (e) {
-                console.error('Error parsing JSON:', e);
-                alert('Terjadi kesalahan saat memproses data laporan. Kemungkinan respons tidak valid.');
+            } else {
+                console.error("Received non-JSON response:", responseText);
+                alert('Terjadi kesalahan pada server, respons yang diterima tidak valid.');
             }
         })
         .catch(err => {
